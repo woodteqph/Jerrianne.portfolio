@@ -795,7 +795,7 @@
                     <!-- Profile Card -->
                     <div class="profile-card">
                         <div class="profile-header">
-                            <div class="profile-badge" id="positionBadge">SALES EXECUTIVE</div>
+                            <div class="profile-badge" id="positionBadge">PROJECT IN CHARGE</div>
                             <div class="profile-img-container">
                                 <!-- CHANGED: Local image from img folder -->
                                 <img id="profileImage" src="img/jiji.jpeg" class="profile-img" alt="Profile" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1582750433449-648ed127bb54?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'">
@@ -816,21 +816,21 @@
                         <!-- Tap Action Grid -->
                         <div class="tap-grid">
                             <!-- Call Button -->
-                            <a href="tel:+639171234567" class="tap-card">
+                            <a href="tel:+639507232511" class="tap-card">
                                 <div class="tap-icon">
                                     <i class="fas fa-phone-alt"></i>
                                 </div>
                                 <div class="tap-label">CALL NOW</div>
-                                <div class="tap-desc">Direct dial to office</div>
+                                <div class="tap-desc">Direct contact number</div>
                             </a>
                             
                             <!-- Email Button -->
-                            <a href="mailto:sales@woodteqphprime.com" class="tap-card">
+                            <a href="mailto:apaez.jerriannejoycemce1965@gmail.com" class="tap-card">
                                 <div class="tap-icon">
                                     <i class="fas fa-envelope"></i>
                                 </div>
                                 <div class="tap-label">SEND EMAIL</div>
-                                <div class="tap-desc">Quick contact form</div>
+                                <div class="tap-desc">Email for inquiries</div>
                             </a>
                             
                             <!-- Save Contact -->
@@ -898,7 +898,7 @@
                                 <i class="fas fa-map-marker-alt info-icon"></i>
                                 <div>
                                     <strong>Location</strong>
-                                    <p id="companyAddress" class="mb-0 small">343 West Service Road, Poblete Compound, Sun Valley, Parañaque City</p>
+                                    <p id="companyAddress" class="mb-0 small">343 West Service Road, Poblete Compound, Parañaque City</p>
                                 </div>
                             </div>
                             
@@ -907,8 +907,8 @@
                                 <div>
                                     <strong>Website</strong>
                                     <p class="mb-0 small">
-                                        <a href="#" id="companyWebsite" class="text-decoration-none" style="color: var(--accent-gold); font-weight: 500;">
-                                            Visit Official Site
+                                        <a href="https://woodteqph.com" id="companyWebsite" class="text-decoration-none" target="_blank" style="color: var(--accent-gold); font-weight: 500;">
+                                            woodteqph.com
                                         </a>
                                     </p>
                                 </div>
@@ -1024,7 +1024,7 @@
     <script>
         // Default configuration
         const defaultConfig = {
-            profileImage: "img/dp.jpeg", // CHANGED: Local image path
+            profileImage: "img/jiji.jpeg", // CHANGED: Local image path
             videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
             videoType: "youtube",
             projects: [
@@ -1057,60 +1057,53 @@
         // Load profile data
         function loadProfileData() {
             const storedData = localStorage.getItem('woodteqphProfile');
-            const config = storedData ? JSON.parse(storedData) : defaultConfig;
+            const config = storedData ? JSON.parse(storedData) : {};
 
-            // Update profile info with fallback
-            const profileImage = document.getElementById('profileImage');
-            profileImage.src = config.profileImage || "img/dp.jpeg";
-            
-            // Add error handling for local image
-            profileImage.onerror = function() {
-                console.log("Local image not found, using fallback");
-                this.src = "https://images.unsplash.com/photo-1582750433449-648ed127bb54?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80";
+            // Set default values based on user request
+            const updatedConfig = {
+                fullName: "Engr. Jerrianne Joyce Apaez",
+                position: "Project In Charge",
+                companyName: "Woodteqph Prime Corporation",
+                companyAddress: "343 West Service Road, Poblete Compound, Parañaque City",
+                companyWebsite: "https://woodteqph.com",
+                contactNumber: "+639507232511",
+                emailAddress: "apaez.jerriannejoycemce1965@gmail.com",
+                aboutCompany: "Woodteqph Prime Corporation specializes in premium construction, custom cabinetry, and luxury interior fit-outs for residential and commercial clients across the Philippines.",
+                profileImage: "img/jiji.jpeg",
+                videoUrl: config.videoUrl || defaultConfig.videoUrl,
+                videoType: config.videoType || defaultConfig.videoType,
+                projects: config.slideshowImages || config.projects || defaultConfig.projects
             };
+
+            // Update profile info
+            document.getElementById('profileImage').src = updatedConfig.profileImage;
+            document.getElementById('fullName').textContent = updatedConfig.fullName;
+            document.getElementById('positionTitle').textContent = updatedConfig.position;
+            document.getElementById('positionBadge').textContent = "PROJECT IN CHARGE";
+            document.getElementById('companyName').textContent = updatedConfig.companyName;
+            document.getElementById('aboutCompany').textContent = updatedConfig.aboutCompany;
+            document.getElementById('companyAddress').textContent = updatedConfig.companyAddress;
             
-            if (config.fullName) {
-                document.getElementById('fullName').textContent = config.fullName;
-            }
-            if (config.position) {
-                document.getElementById('positionTitle').textContent = config.position;
-                document.getElementById('positionBadge').textContent = config.position.split(' ')[0].toUpperCase();
-            }
-            if (config.companyName) {
-                document.getElementById('companyName').textContent = config.companyName;
-            }
-            if (config.aboutCompany) {
-                document.getElementById('aboutCompany').textContent = config.aboutCompany;
-            }
-            if (config.companyAddress) {
-                document.getElementById('companyAddress').textContent = config.companyAddress;
-            }
-            if (config.contactNumber) {
-                document.querySelector('a[href^="tel:"]').href = `tel:${config.contactNumber}`;
-            }
-            if (config.emailAddress) {
-                document.querySelector('a[href^="mailto:"]').href = `mailto:${config.emailAddress}`;
-            }
-            if (config.companyWebsite) {
-                const link = document.getElementById('companyWebsite');
-                link.href = config.companyWebsite.startsWith('http') ? 
-                    config.companyWebsite : `https://${config.companyWebsite}`;
-                link.target = '_blank';
-            }
+            // Update contact links
+            document.querySelector('a[href^="tel:"]').href = `tel:${updatedConfig.contactNumber}`;
+            document.querySelector('a[href^="mailto:"]').href = `mailto:${updatedConfig.emailAddress}`;
+            
+            // Update website link
+            const websiteLink = document.getElementById('companyWebsite');
+            websiteLink.href = updatedConfig.companyWebsite;
+            websiteLink.textContent = updatedConfig.companyWebsite.replace('https://', '');
+            websiteLink.target = '_blank';
 
             // Setup video
-            if (config.videoUrl) {
-                setupVideo(config.videoUrl, config.videoType || "youtube");
+            if (updatedConfig.videoUrl) {
+                setupVideo(updatedConfig.videoUrl, updatedConfig.videoType);
             }
 
             // Load projects
-            if (config.slideshowImages && config.slideshowImages.length > 0) {
-                loadProjects(config.slideshowImages);
-            } else if (config.projects) {
-                loadProjects(config.projects);
-            } else {
-                loadProjects(defaultConfig.projects);
-            }
+            loadProjects(updatedConfig.projects);
+            
+            // Save updated config
+            localStorage.setItem('woodteqphProfile', JSON.stringify(updatedConfig));
         }
 
         // Setup video player
@@ -1232,25 +1225,18 @@
 
         // Generate vCard for contact saving
         function generateVCard() {
-            const config = localStorage.getItem('woodteqphProfile') ? 
-                JSON.parse(localStorage.getItem('woodteqphProfile')) : {};
+            const config = JSON.parse(localStorage.getItem('woodteqphProfile')) || {};
             
-            const name = config.fullName || 'Cus Marqueses';
-            const company = config.companyName || 'Woodteqph Prime Corporation';
-            const title = config.position || 'Sales Executive';
-            const phone = config.contactNumber || '+639171234567';
-            const email = config.emailAddress || 'sales@woodteqphprime.com';
-            const address = config.companyAddress || '343 West Service Road, Poblete Compound, Sun Valley, Parañaque City';
-
             return `BEGIN:VCARD
 VERSION:3.0
-FN:${name}
-ORG:${company}
-TITLE:${title}
-TEL;TYPE=WORK,VOICE:${phone}
-EMAIL;TYPE=PREF,INTERNET:${email}
-ADR;TYPE=WORK:;;${address}
-PHOTO;VALUE=URI:${config.profileImage || "img/dp.jpeg"}
+FN:Engr. Jerrianne Joyce Apaez
+ORG:Woodteqph Prime Corporation
+TITLE:Project In Charge
+TEL;TYPE=WORK,VOICE:+639507232511
+EMAIL;TYPE=PREF,INTERNET:apaez.jerriannejoycemce1965@gmail.com
+ADR;TYPE=WORK:;;343 West Service Road, Poblete Compound, Parañaque City
+URL:https://woodteqph.com
+PHOTO;VALUE=URI:img/jiji.jpeg
 NOTE:Digital Business Card - Tap & Save
 END:VCARD`;
         }
@@ -1277,7 +1263,7 @@ END:VCARD`;
             if (navigator.share) {
                 navigator.share({
                     title: 'Woodteqph Prime Business Card',
-                    text: 'Check out this digital business card',
+                    text: 'Check out this digital business card for Engr. Jerrianne Joyce Apaez',
                     url: window.location.href
                 }).then(() => showToast('Card shared successfully!'));
             } else {
